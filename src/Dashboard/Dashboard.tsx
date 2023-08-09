@@ -131,9 +131,9 @@ function Dashboard() {
           <div key={item.name} className="favorite-item">
             {weatherData && (
               <Link
-                to={{
-                  pathname: `/${item.name}`,
-                }}
+              to={{
+                pathname: `/${item.name}+${item.units === 'imperial' ? 'F' : 'C'}`,
+              }}
               >
                 <p className="favorite-name">Name: {item.name}</p>
                 <p className="favorite-temperature">
