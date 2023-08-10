@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery } from 'react-query';
 import './../App.css'; 
-
+import { fetchData } from '../api.ts';
 interface WeatherData {
   name: string;
   main: {
@@ -32,14 +32,10 @@ function Dashboard() {
   const [units, setUnits] = useState<'imperial' | 'metric'>('imperial');
   const [fav, setFav] = useState<FavoriteCity[]>([]);
 
+
   const fetchWeatherData = async () => {
-    const response = await fetch(
-      `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`
-    );
-    if (!response.ok) {
-      throw new Error('City not found');
-    }
-    return response.json();
+    const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+    return fetchData(url);
   };
 
   const { data: weatherData, error, isLoading, refetch } = useQuery<WeatherData>('weatherData', fetchWeatherData);

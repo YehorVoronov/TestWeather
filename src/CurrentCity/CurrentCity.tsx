@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useQuery } from 'react-query';
+import { fetchData } from '../api.ts';
 
 interface WeatherData {
   main: {
@@ -33,13 +34,8 @@ function CurrentCity() {
   const fetchWeatherData = async () => {
     if (cityName) {
       const encodedCityName = encodeURIComponent(cityName);
-      const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/weather?q=${encodedCityName}&appid=${apiKey}&units=${units}`
-      );
-      if (!response.ok) {
-        throw new Error('City not found');
-      }
-      return response.json();
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${encodedCityName}&appid=${apiKey}&units=${units}`;
+      return fetchData(url);
     }
     return null;
   };
